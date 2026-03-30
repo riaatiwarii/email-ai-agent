@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email AI Agent Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="left-rail">
+      <div class="brand-block">
+        <p class="eyebrow">Email Operations</p>
+        <h1>Email AI Agent</h1>
+        <p class="muted">Connect a real inbox, review extracted work, and turn messages into notes, reminders, replies, and calendar-ready actions.</p>
+      </div>
+
+      <section class="rail-panel">
+        <div class="section-head">
+          <span class="eyebrow">API</span>
+          <h2>Connection</h2>
+        </div>
+        <label class="field">
+          <span>Backend URL</span>
+          <input id="apiBaseUrl" value="http://localhost:8000" />
+        </label>
+        <button id="saveApiBaseUrl">Save URL</button>
+      </section>
+
+      <section class="rail-panel">
+        <div class="section-head">
+          <span class="eyebrow">Live Inbox</span>
+          <h2>Connect Email</h2>
+        </div>
+        <form id="accountForm" class="stack">
+          <label class="field">
+            <span>Email</span>
+            <input name="email_address" type="email" placeholder="you@gmail.com" required />
+          </label>
+          <label class="field">
+            <span>App Password</span>
+            <input name="password" type="password" placeholder="Gmail app password" required />
+          </label>
+          <label class="field">
+            <span>IMAP Host</span>
+            <input name="imap_host" value="imap.gmail.com" />
+          </label>
+          <label class="field">
+            <span>SMTP Host</span>
+            <input name="smtp_host" value="smtp.gmail.com" />
+          </label>
+          <div class="actions-inline">
+            <button type="button" id="testAccount">Test</button>
+            <button type="button" class="warm" id="syncInbox">Sync Inbox</button>
+          </div>
+        </form>
+        <pre id="accountStatus" class="console compact">Waiting for connection test...</pre>
+      </section>
+
+      <section class="rail-panel">
+        <div class="section-head">
+          <span class="eyebrow">Manual</span>
+          <h2>Quick Add</h2>
+        </div>
+        <form id="ingestForm" class="stack">
+          <label class="field">
+            <span>Message ID</span>
+            <input name="message_id" placeholder="demo-001" required />
+          </label>
+          <label class="field">
+            <span>From</span>
+            <input name="from_address" placeholder="sender@example.com" />
+          </label>
+          <label class="field">
+            <span>To</span>
+            <input name="to_address" placeholder="you@example.com" />
+          </label>
+          <label class="field">
+            <span>Subject</span>
+            <input name="subject" placeholder="Interview follow-up" required />
+          </label>
+          <label class="field">
+            <span>Body</span>
+            <textarea name="raw_body" placeholder="Please send your resume and let's schedule a meeting." required></textarea>
+          </label>
+          <button type="submit">Queue Email</button>
+        </form>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Operator Workspace</p>
+          <h2>Inbox intelligence with a human checkpoint.</h2>
+          <p class="muted hero-text">Use the live inbox connector for Gmail-style IMAP testing, then manage tasks from a friendlier control room built for real usage instead of a bare API demo.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="refreshAll">Refresh Everything</button>
+          <button class="ghost" id="seedExample">Load Example</button>
+        </div>
+      </section>
+
+      <section id="metrics" class="metrics-grid"></section>
+
+      <section class="workspace-grid">
+        <section class="surface inbox-surface">
+          <div class="surface-head">
+            <div>
+              <p class="eyebrow">Inbox</p>
+              <h3>Recent Emails</h3>
+            </div>
+          </div>
+          <div id="emailList" class="email-list"></div>
+        </section>
+
+        <section class="surface detail-surface">
+          <div class="surface-head">
+            <div>
+              <p class="eyebrow">Details</p>
+              <h3>Selected Email</h3>
+            </div>
+          </div>
+          <div id="emailDetail" class="detail-empty">Choose an email to see the extracted tasks, notes, and action history.</div>
+        </section>
+      </section>
+
+      <section class="board-grid">
+        <section class="surface">
+          <div class="surface-head">
+            <div>
+              <p class="eyebrow">Approval Queue</p>
+              <h3>Pending Tasks</h3>
+            </div>
+          </div>
+          <div id="pendingTasks" class="task-stack empty">No tasks waiting for approval.</div>
+        </section>
+
+        <section class="surface">
+          <div class="surface-head">
+            <div>
+              <p class="eyebrow">Knowledge Base</p>
+              <h3>Notes</h3>
+            </div>
+          </div>
+          <div id="notesList" class="notes-stack empty">No notes saved yet.</div>
+        </section>
+      </section>
+
+      <section class="surface">
+        <div class="surface-head">
+          <div>
+            <p class="eyebrow">System Console</p>
+            <h3>Activity Feed</h3>
+          </div>
+        </div>
+        <pre id="activityConsole" class="console">Ready.</pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
